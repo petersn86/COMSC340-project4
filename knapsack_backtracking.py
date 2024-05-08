@@ -1,7 +1,12 @@
 import time
 
+# Global variable
+nodes_visited = 0
+
 def knapsack_backtrack(i, profit, weight):
-    global maxprofit, numbest, bestset
+    global maxprofit, numbest, bestset, nodes_visited
+    nodes_visited += 1  # Increment the counter for each node visited
+    
     if weight <= W and profit > maxprofit:
         maxprofit = profit
         numbest = i
@@ -41,12 +46,12 @@ maxprofit = 0
 numbest = 0
 bestset = []
 include = ["no"] * (n + 1)
+nodes_visited = 0
 
 start = time.perf_counter()
 knapsack_backtrack(0, 0, 0)
 end = time.perf_counter()
-print("{:0.10f}".format(end - start))
-
+print("Time taken:", "{:0.10f}".format(end - start))
 print("Max Profit:", maxprofit)
 print("Items included:")
 num = 0
@@ -54,7 +59,8 @@ for j in bestset:
     if j == "yes":
         print("Item", num)
     num += 1
-    
+
+print("Nodes visited:", nodes_visited - 1)
 
 
 # Example usage
@@ -66,12 +72,12 @@ maxprofit = 0
 numbest = 0
 bestset = []
 include = ["no"] * (n + 1)
+nodes_visited = 0
 
 start = time.perf_counter()
 knapsack_backtrack(0, 0, 0)
 end = time.perf_counter()
-print("{:0.10f}".format(end - start))
-
+print("Time taken:", "{:0.10f}".format(end - start))
 print("Max Profit:", maxprofit)
 print("Items included:")
 num = 0
@@ -79,7 +85,9 @@ for j in bestset:
     if j == "yes":
         print("Item", num)
     num += 1
-    
+
+print("Nodes visited:", nodes_visited - 1)
+
 
 # Example usage
 n = 4  # Number of items
@@ -90,12 +98,12 @@ maxprofit = 0
 numbest = 0
 bestset = []
 include = ["no"] * (n + 1)
+nodes_visited = 0
 
 start = time.perf_counter()
 knapsack_backtrack(0, 0, 0)
 end = time.perf_counter()
-print("{:0.10f}".format(end - start))
-
+print("Time taken:", "{:0.10f}".format(end - start))
 print("Max Profit:", maxprofit)
 print("Items included:")
 num = 0
@@ -103,7 +111,9 @@ for j in bestset:
     if j == "yes":
         print("Item", num)
     num += 1
-    
+
+print("Nodes visited:", nodes_visited - 1)
+
 
 # Example usage
 n = 4  # Number of items
@@ -114,12 +124,12 @@ maxprofit = 0
 numbest = 0
 bestset = []
 include = ["no"] * (n + 1)
+nodes_visited = 0
 
 start = time.perf_counter()
 knapsack_backtrack(0, 0, 0)
 end = time.perf_counter()
-print("{:0.10f}".format(end - start))
-
+print("Time taken:", "{:0.10f}".format(end - start))
 print("Max Profit:", maxprofit)
 print("Items included:")
 num = 0
@@ -127,23 +137,25 @@ for j in bestset:
     if j == "yes":
         print("Item", num)
     num += 1
-    
+
+print("Nodes visited:", nodes_visited - 1)
+
 
 # Example usage
 n = 4  # Number of items
-W = 1  # Capacity of the knapsack
+W = 1 # Capacity of the knapsack
 p = [1, 1, 1, 1]  # Profits of items
 w = [2, 3, 4, 5]  # Weights of items
 maxprofit = 0
 numbest = 0
 bestset = []
 include = ["no"] * (n + 1)
+nodes_visited = 0
 
 start = time.perf_counter()
 knapsack_backtrack(0, 0, 0)
 end = time.perf_counter()
-print("{:0.10f}".format(end - start))
-
+print("Time taken:", "{:0.10f}".format(end - start))
 print("Max Profit:", maxprofit)
 print("Items included:")
 num = 0
@@ -151,4 +163,5 @@ for j in bestset:
     if j == "yes":
         print("Item", num)
     num += 1
-    
+
+print("Nodes visited:", nodes_visited - 1)
