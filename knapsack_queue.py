@@ -73,6 +73,49 @@ def knapsack(W, arr, n):
 
     return max_profit, nodes_visited, max_items_selected
 
+def knapsack(W, arr, n):
+    arr.sort(key=lambda x: x.value / x.weight, reverse=True)
+
+    queue = []
+    u = Node(-1, 0, 0, [])  # Initialize with an empty list for selected items
+    queue.append(u)
+
+    max_profit = 0
+    nodes_visited = 0  # Counter for nodes visited
+
+    while queue:
+        u = queue.pop(0)
+        nodes_visited += 1  # Increment nodes visited counter
+
+        if u.level == -1:
+            v = Node(0, 0, 0, [])
+        elif u.level == n - 1:
+            continue
+        else:
+            v = Node(u.level + 1, u.profit, u.weight, u.items_selected[:])  # Copy items_selected list
+
+        v.weight += arr[v.level].weight
+        v.profit += arr[v.level].value
+        v.items_selected.append(v.level)  # Add the index of the selected item
+
+        if v.weight <= W and v.profit > max_profit:
+            max_profit = v.profit
+            max_items_selected = v.items_selected  # Keep track of the best items selected
+
+        v_bound = bound(v, n, W, arr)
+        if v_bound > max_profit:
+            queue.append(v)
+
+        v = Node(u.level + 1, u.profit, u.weight, u.items_selected[:])  # Copy items_selected list
+        v_bound = bound(v, n, W, arr)
+        if v_bound > max_profit:
+            queue.append(v)
+        
+    if max_profit == 0:
+        max_items_selected = [0]
+
+    return max_profit, nodes_visited, max_items_selected
+
 W = 16
 arr = [
     Item(2, 40),

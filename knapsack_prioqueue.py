@@ -13,9 +13,6 @@ class Node:
         self.weight = weight
         self.items_selected = items_selected  # List to keep track of selected items
 
-    def __lt__(self, other):
-        return other.weight - self.weight
-
 def bound(u, n, W, arr):
     if u.weight >= W:
         return 0
@@ -30,7 +27,7 @@ def bound(u, n, W, arr):
         j += 1
 
     if j < n:
-        profit_bound += int((W - total_weight) * arr[j].value / arr[j].weight)
+        profit_bound += (W - total_weight) * arr[j].value / arr[j].weight
 
     return profit_bound
 
@@ -39,13 +36,13 @@ def knapsack(W, arr, n):
 
     priority_queue = PriorityQueue()
     u = Node(-1, 0, 0, [])  # Initialize with an empty list for selected items
-    priority_queue.put(u)
+    priority_queue.put((0, u))  # Prioritize nodes with lower bounds
 
     max_profit = 0
     nodes_visited = 0  # Counter for nodes visited
 
     while not priority_queue.empty():
-        u = priority_queue.get()
+        _, u = priority_queue.get()
         nodes_visited += 1  # Increment nodes visited counter
 
         if u.level == -1:
@@ -65,12 +62,12 @@ def knapsack(W, arr, n):
 
         v_bound = bound(v, n, W, arr)
         if v_bound > max_profit:
-            priority_queue.put(v)
+            priority_queue.put((-v_bound, v))  # Negate bound for priority ordering
 
         v = Node(u.level + 1, u.profit, u.weight, u.items_selected[:])  # Copy items_selected list
         v_bound = bound(v, n, W, arr)
         if v_bound > max_profit:
-            priority_queue.put(v)
+            priority_queue.put((-v_bound, v))  # Negate bound for priority ordering
         
     if max_profit == 0:
         max_items_selected = [0]
